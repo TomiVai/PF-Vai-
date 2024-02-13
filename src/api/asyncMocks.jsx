@@ -1,4 +1,3 @@
-// src/api/asyncMocks.js
 export const getAllProducts = async () => {
   return [
     {
@@ -40,8 +39,6 @@ export const getAllProducts = async () => {
 };
 
 export const getProductsByCategory = async (category) => {
-  // En este ejemplo, asumimos que todos los productos pertenecen a una categoría "otros"
-  // Puedes modificar esto según tus necesidades reales
   const allProducts = await getAllProducts();
   return allProducts.filter((product) => product.category === category);
 };
