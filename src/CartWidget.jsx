@@ -1,19 +1,19 @@
-// src/components/CartWidget.jsx
-// src/components/CartWidget.jsx
+// CartWidget.jsx
 import React from 'react';
-import { BsCart } from 'react-icons/bs';
-import { Badge, Nav } from 'react-bootstrap';
+import { useCart } from './Components/CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
-const CartWidget = ({ cartItemsCount }) => {
+const CartWidget = () => {
+  const { cartState, calculateTotal } = useCart();
+  const cartItemsCount = cartState.cartItems.reduce((count, item) => count + item.quantity, 0);
+
   return (
-    <Nav.Link href="#carrito" className="text-light">
-      <div>
-        <BsCart size={30} />
-        <Badge bg="secondary">{cartItemsCount}</Badge>
-      </div>
-    </Nav.Link>
+    <div>
+      <FontAwesomeIcon icon={faShoppingCart} />
+      <span>{cartItemsCount > 0 ? cartItemsCount : ''}</span>
+    </div>
   );
 };
 
 export default CartWidget;
-

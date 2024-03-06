@@ -4,7 +4,7 @@ import { getProductById } from '../api/asyncMocks';
 import ItemQuantitySelector from './ItemQuantitySelector';
 import Description from './Description';
 import AddItemButton from './AddItemButton';
-import { useCart } from '../CartContext';
+import { useCart } from './CartContext';
 
 const ItemDetailContainer = () => {
   const { id } = useParams();

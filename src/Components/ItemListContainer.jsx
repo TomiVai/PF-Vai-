@@ -1,8 +1,18 @@
+// ItemListContainer.jsx
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Products from '../Products';
+import { useCart } from './CartContext';
 
-const ItemListContainer = ({ addToCart, category }) => {
+const ItemListContainer = ({ category }) => {
+  const { dispatch } = useCart(); // Cambiado de addToCart a dispatch
+
+  const handleAddToCart = (product) => {
+    dispatch({ type: 'ADD_TO_CART', payload: product });
+    // Puedes redirigir al usuario a la página del carrito aquí si es necesario
+    // history.push('/cart');
+  };
+
   const products = [
     {
       id: 1,
@@ -50,6 +60,7 @@ const ItemListContainer = ({ addToCart, category }) => {
     ? products.filter(product => product.category === category)
     : products;
 
+
   return (
     <Container>
       <Row>
@@ -59,7 +70,7 @@ const ItemListContainer = ({ addToCart, category }) => {
               title={product.title}
               img={product.image}
               description={`Precio: $${product.price}, Stock: ${product.stock}`}
-              addToCart={() => addToCart(product)}
+              addToCart={() => handleAddToCart(product)}
             />
           </Col>
         ))}
