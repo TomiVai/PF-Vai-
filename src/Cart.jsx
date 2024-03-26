@@ -2,8 +2,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import CartWidget from './CartWidget';
-import CheckoutForm from './CheckoutForm';
-import { useCart } from '../CartContext';
+import CheckoutForm from './Components/CheckoutForm';
+import { useCart } from './Components/CartContext';
 
 const Cart = () => {
   const { cartState, dispatch } = useCart();
