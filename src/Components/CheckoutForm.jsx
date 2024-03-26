@@ -1,7 +1,7 @@
-// CheckoutForm.jsx
 import React, { useState } from 'react';
 import SweetAlert2 from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { addDoc, collection } from './firebase';
 import 'sweetalert2/dist/sweetalert2.css';
 
 const MySwal = withReactContent(SweetAlert2);
@@ -9,11 +9,11 @@ const MySwal = withReactContent(SweetAlert2);
 const CheckoutForm = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [selectedPaymentMethods, setSelectedPaymentMethods] = useState([]);
 
-  const handlePurchase = () => {
-    // Validación básica del formulario
-    if (!email || !name || selectedPaymentMethods.length === 0) {
+  const handlePurchase = async () => {
+    if (!email || !name || !phone || selectedPaymentMethods.length === 0) {
       MySwal.fire({
         title: 'Por favor, complete todos los campos',
         icon: 'error',
@@ -21,19 +21,25 @@ const CheckoutForm = () => {
       });
       return;
     }
-
-    // Lógica para procesar la compra, puedes enviar los datos a un servidor, etc.
-
-    // Mostrar el mensaje de compra exitosa
-    MySwal.fire({
-      title: 'Compra realizada con éxito',
-      icon: 'success',
-      confirmButtonText: 'Ok',
-    });
+  
+    try {
+      MySwal.fire({
+        title: 'Compra realizada con éxito',
+        icon: 'success',
+        confirmButtonText: 'Ok',
+      });
+    } catch (error) {
+      console.error('Error al procesar la compra:', error);
+      MySwal.fire({
+        title: 'Ocurrió un error al procesar la compra',
+        text: 'Por favor, inténtalo de nuevo más tarde',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
+    }
   };
 
   const handlePaymentMethodChange = (method) => {
-    // Lógica para manejar la selección de métodos de pago
     if (selectedPaymentMethods.includes(method)) {
       setSelectedPaymentMethods(selectedPaymentMethods.filter((m) => m !== method));
     } else {
@@ -60,6 +66,15 @@ const CheckoutForm = () => {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <label htmlFor="phone">Teléfono:</label>
+        <input
+          type="tel"
+          id="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           required
         />
 
